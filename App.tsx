@@ -21,7 +21,6 @@ function App(): React.JSX.Element {
 
   return (
     <>
-      <Text> Hello tasks!</Text>
       <NavigationContainer>
         <HomeStack />
       </NavigationContainer>

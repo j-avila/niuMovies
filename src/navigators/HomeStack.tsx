@@ -5,17 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 // views
 import Home from '../pages/Home';
 
-// types
-// import { Movie } from '../interfaces/MoviesDB';
-// export type RootStackParams = {
-//   Home: undefined;
-//   Detail: Movie;
-//   Movie: {
-//     name: string;
-//     id: string;
-//   };
-// };
-
 const TestComp = () => {
   return (
     <View>
@@ -28,9 +17,13 @@ const Stack = createStackNavigator();
 
 const HomeStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: true,
+      }}
+    >
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Test" component={TestComp} />
+      <Stack.Screen name="Detail" component={TestComp} />
     </Stack.Navigator>
   );
 };
