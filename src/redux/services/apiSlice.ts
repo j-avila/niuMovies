@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const url = 'http://192.168.1.85:3000';
 
+//TODO: add an chagpt service whos recomends a movie or series randomly
+
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: `${url}` }),

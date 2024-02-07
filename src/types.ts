@@ -32,3 +32,17 @@ export interface Rating {
   Source: string;
   Value: string;
 }
+
+export interface MovieSearch {
+  Search: Search[];
+  totalResults: string;
+  Response: string;
+}
+
+export interface Search {
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: string;
+  Poster: string;
+}

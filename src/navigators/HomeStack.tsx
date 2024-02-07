@@ -4,14 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // views
 import Home from '../pages/Home';
-
-const TestComp = () => {
-  return (
-    <View>
-      <Text>Test</Text>
-    </View>
-  );
-};
+import Details from '../pages/details/Details';
 
 const Stack = createStackNavigator();
 
@@ -19,11 +12,11 @@ const HomeStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
       }}
     >
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Detail" component={TestComp} />
+      <Stack.Screen name="Details" component={Details} />
     </Stack.Navigator>
   );
 };
