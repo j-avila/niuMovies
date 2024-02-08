@@ -1,22 +1,24 @@
-import {} from 'react';
+import { useEffect } from 'react';
 import {
+  FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
   useColorScheme,
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { useNavigation } from '@react-navigation/native';
 import Logo from '@components/Logo';
-import Button from '@components/Button';
+import CardList from '@components/MovieCard';
+
+import { useGetMoviesQuery } from '../redux/services/apiSlice';
 
 const defImg = require('@assets/poster.png');
 
 const Home = () => {
-  const navigation = useNavigation();
+  const { isLoading, data } = useGetMoviesQuery('');
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -24,6 +26,10 @@ const Home = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     color: isDarkMode ? Colors.lighter : Colors.darker,
   };
+
+  useEffect(() => {
+    console.log('data 🔥', data);
+  }, [data]);
 
   return (
     <View style={{ ...styles.sectionContainer, ...themeStyle }}>
@@ -41,25 +47,17 @@ const Home = () => {
             placeholderTextColor="#87888a"
           />
         </View>
-        <View style={styles.info}>
-          <Text style={{ ...styles.sectionTitle, color: 'white' }}>
-            Some example
-          </Text>
-          <Button
-            action={() => navigation.navigate('Details', {})}
-            color="tomato"
-          >
-            <Text
-              style={{
-                ...styles.highlight,
-                color: 'white',
-              }}
-            >
-              See trailer and details
-            </Text>
-          </Button>
-        </View>
+        {data?.Search && (
+          <>
+            <View style={styles.info}>
+              <Text style={{ color: 'white' }}>Resultados</Text>
+            </View>
+            <CardList data={data?.Search} />
+          </>
+        )}
       </View>
+
+      {/* BG poster */}
       <Image source={defImg} style={styles.imagePoster} />
     </View>
   );

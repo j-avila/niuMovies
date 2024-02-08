@@ -1,5 +1,5 @@
 import { View, Image, StyleSheet, useColorScheme } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useNavigation } from '@react-navigation/native';
 import YoutubePlayer from 'react-native-youtube-iframe';
@@ -7,13 +7,17 @@ import HeadDetail from './components/HeadDetail';
 import MovieDetails from './components/MovieDetails';
 import Button from '../../components/Button';
 import Logo from '@components/Logo';
+import { useGetMovieDetailsQuery } from '../../redux/services/apiSlice';
 
 // assets
 const defImg = require('@assets/poster.png');
 
 const playBut = require('@assets/play_but.png');
 
-type Props = {};
+type Props = {
+  route: any;
+  navigation: any;
+};
 
 const data = {
   details: {
@@ -61,10 +65,12 @@ const data = {
 
 // view
 
-const Details = (props: Props) => {
+const Details = ({ route }: Props) => {
+  const { id, title } = route.params;
   const navigation = useNavigation();
   const [playerOn, setPlayerOn] = useState(false);
   const isDarkMode = useColorScheme() === 'dark';
+  // const {data, isLoading} = useGetMovieDetailsQuery('')
 
   const themeStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -78,6 +84,10 @@ const Details = (props: Props) => {
       navigation.goBack();
     }
   };
+
+  useEffect(() => {
+    console.log('data 🔥', { id, title });
+  }, []);
 
   return (
     <View style={{ ...styles.sectionContainer, ...themeStyle }}>
