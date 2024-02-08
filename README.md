@@ -1,3 +1,6 @@
+![image](https://github.com/j-avila/niuMovies/assets/1820321/8e5d2623-0e5f-44c0-9294-ad2ddea5050b)
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
