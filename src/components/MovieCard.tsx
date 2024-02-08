@@ -27,6 +27,7 @@ export const MovieCard = ({ width, height, data }: Props) => {
         navigate.navigate('Details', {
           title: data?.Title,
           id: data?.imdbID,
+          poster: data?.Poster,
         });
       }}
       style={{ marginVertical: 6 }}

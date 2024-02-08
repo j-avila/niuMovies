@@ -11,9 +11,10 @@ interface HeadDetailProps {
   };
   themeSwitch: () => void;
   state: boolean;
+  title: string;
 }
 
-const HeadDetail = ({ data, themeSwitch, state }: HeadDetailProps) => {
+const HeadDetail = ({ data, themeSwitch, state, title }: HeadDetailProps) => {
   return (
     <View style={styles.head}>
       <TouchableOpacity onPress={themeSwitch}>
@@ -36,7 +37,7 @@ const HeadDetail = ({ data, themeSwitch, state }: HeadDetailProps) => {
           textAlign: 'center',
         }}
       >
-        {data.Title}
+        {title}
       </Text>
       <TouchableOpacity onPress={() => console.log(data.imdbID)}>
         <Image

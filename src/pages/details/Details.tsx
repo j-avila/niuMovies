@@ -1,4 +1,10 @@
-import { View, Image, StyleSheet, useColorScheme } from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  useColorScheme,
+  ActivityIndicator,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useNavigation } from '@react-navigation/native';
@@ -8,10 +14,10 @@ import MovieDetails from './components/MovieDetails';
 import Button from '../../components/Button';
 import Logo from '@components/Logo';
 import { useGetMovieDetailsQuery } from '../../redux/services/apiSlice';
+import { useGetMovieTrailerQuery } from '../../redux/services/trailerSlice';
 
 // assets
 const defImg = require('@assets/poster.png');
-
 const playBut = require('@assets/play_but.png');
 
 type Props = {
@@ -19,7 +25,7 @@ type Props = {
   navigation: any;
 };
 
-const data = {
+const dataMock = {
   details: {
     Title: 'Star Wars: Episode V - The Empire Strikes Back',
     Year: '1980',
@@ -66,11 +72,12 @@ const data = {
 // view
 
 const Details = ({ route }: Props) => {
-  const { id, title } = route.params;
+  const { id, title, poster } = route.params;
   const navigation = useNavigation();
   const [playerOn, setPlayerOn] = useState(false);
   const isDarkMode = useColorScheme() === 'dark';
-  // const {data, isLoading} = useGetMovieDetailsQuery('')
+  const { data, isLoading } = useGetMovieDetailsQuery(id);
+  const { data: trailer } = useGetMovieTrailerQuery(title);
 
   const themeStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -85,10 +92,6 @@ const Details = ({ route }: Props) => {
     }
   };
 
-  useEffect(() => {
-    console.log('data 🔥', { id, title });
-  }, []);
-
   return (
     <View style={{ ...styles.sectionContainer, ...themeStyle }}>
       {playerOn ? (
@@ -96,7 +99,7 @@ const Details = ({ route }: Props) => {
           <YoutubePlayer
             height={220}
             // play={playerOn}
-            videoId={'iee2TATGMyI'}
+            videoId={trailer}
             webViewProps={{
               containerStyle: {
                 position: 'relative',
@@ -127,7 +130,7 @@ const Details = ({ route }: Props) => {
           </Button>
 
           <Image
-            source={{ uri: data.details.Poster } || defImg}
+            source={{ uri: poster } || defImg}
             style={styles.imagePoster}
           />
         </>
@@ -136,11 +139,16 @@ const Details = ({ route }: Props) => {
       {/* INFO */}
       <View style={{ ...styles.infoContainer, flex: playerOn ? 2 : 0 }}>
         <HeadDetail
-          data={data.details}
+          title={title}
+          data={dataMock.details}
           state={playerOn}
           themeSwitch={handlePlayerLayout}
         />
-        <MovieDetails data={data.details} state={playerOn} />
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <MovieDetails data={data} state={playerOn} />
+        )}
       </View>
     </View>
   );

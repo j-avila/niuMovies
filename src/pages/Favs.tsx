@@ -17,8 +17,8 @@ import useMovieSuggestion from '../hooks/Suggestions';
 import { useNavigation } from '@react-navigation/native';
 const defImg = require('@assets/poster.png');
 
-const Home = () => {
-  const [query, setQuery] = useState('');
+const Favs = () => {
+  const [query, setQuery] = useState('interstellar');
   const { isLoading, data } = useGetMoviesQuery(query);
   const { movieSuggestion, error } = useMovieSuggestion();
   const isDarkMode = useColorScheme() === 'dark';
@@ -29,35 +29,6 @@ const Home = () => {
     color: isDarkMode ? Colors.lighter : Colors.darker,
   };
 
-  const defsug = {
-    Title: 'Godfather',
-    Year: '2022',
-    Rated: 'TV-14',
-    Released: '05 Oct 2022',
-    Runtime: '157 min',
-    Genre: 'Action, Crime, Drama',
-    Director: 'Mohan Raja',
-    Writer: 'Lakshmi Bhupala, Murali Gopy, Mohan Raja',
-    Actors: 'Chiranjeevi, Salman Khan, Nayanthara',
-    Plot: 'After the death of a political leader, a mysterious man steps in to ascend the throne.',
-    Language: 'Tamil, Kannada, Malayalam, Telugu, Hindi',
-    Country: 'India',
-    Awards: '1 win & 2 nominations',
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BYmIxMjM2N2MtYjJiMC00NDNmLWExMDEtZjYyYjIyNjMzMDEwXkEyXkFqcGdeQXVyOTI3MzI4MzA@._V1_SX300.jpg',
-    Ratings: [{ Source: 'Internet Movie Database', Value: '5.2/10' }],
-    Metascore: 'N/A',
-    imdbRating: '5.2',
-    imdbVotes: '7,486',
-    imdbID: 'tt13130308',
-    Type: 'movie',
-    DVD: 'N/A',
-    BoxOffice: 'N/A',
-    Production: 'N/A',
-    Website: 'N/A',
-    Response: 'True',
-  };
-
   useEffect(() => {
     console.log('🙏🏽', useMovieSuggestion);
     console.log('🙏🏽', error);
@@ -66,31 +37,11 @@ const Home = () => {
   return (
     <View style={{ ...styles.sectionContainer, ...themeStyle }}>
       <Logo />
-
-      <View style={styles.infoContainer}>
-        <View style={styles.search}>
-          <TextInput
-            style={{
-              flex: 1,
-              fontSize: 18,
-              color: '#e8e9eb',
-            }}
-            onChangeText={setQuery}
-            placeholder="Search for a movie"
-            placeholderTextColor="#87888a"
-            value={query}
-          />
-          <Button action={() => setQuery('')}>
-            <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20 }}>
-              x
-            </Text>
-          </Button>
-        </View>
-        <View style={{ padding: 20 }}>
-          <Button color="tomato" action={() => navigation.navigate('Favs')}>
-            <Text style={{ color: 'white' }}>Ver mis favoritos 🌟</Text>
-          </Button>
-        </View>
+      <Text style={{ fontSize: 40, textAlign: 'center' }}>Favourites</Text>
+      <Button action={() => navigation.navigate('Home')}>
+        <Text>Back to home</Text>
+      </Button>
+      <>
         {data?.Search && (
           <>
             <View style={styles.info}>
@@ -99,31 +50,7 @@ const Home = () => {
             <CardList data={data?.Search} />
           </>
         )}
-      </View>
-
-      {/* BG poster */}
-      <View style={styles.feat}>
-        <View
-          style={{
-            zIndex: 1,
-          }}
-        >
-          <Text
-            style={{
-              ...styles.sectionTitle,
-              color: 'white',
-              textAlign: 'center',
-              fontSize: 34,
-            }}
-          >
-            Busca tus peliculas favoritas
-          </Text>
-        </View>
-        <Image
-          source={{ uri: defsug.Poster } || defImg}
-          style={styles.imagePoster}
-        />
-      </View>
+      </>
     </View>
   );
 };
@@ -133,6 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
+    backgroundColor: '#171717',
   },
   sectionTitle: {
     fontSize: 24,
@@ -210,4 +138,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Favs;
